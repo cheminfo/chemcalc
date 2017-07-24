@@ -1,0 +1,8 @@
+<module>
+  <source path="chemcalc">
+  <exclude name="**/test/**" />
+  <exclude name="**/applications/**" />
+  <exclude name="**/CreateFiles.java" />
+  </source>
+  <source path="json" />
+</module> 
