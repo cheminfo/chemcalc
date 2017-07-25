@@ -7,6 +7,7 @@ import org.chemcalc.core.MFException;
 import org.chemcalc.services.JSONForMF;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -41,11 +42,11 @@ public class TestRange {
 		
 		options.put("mf", "C1-10H20");
 		JSONObject json=JSONForMF.execute(options,groups,elements);
-		assertEquals(json.getDouble("charge"),0.0,0.00001);
+		Assert.assertEquals(json.getDouble("charge"),0.0,0.00001);
 
 		options.put("mf", "C1-10H20(2+)");
 		json=JSONForMF.execute(options,groups,elements);
-		assertEquals(json.getDouble("charge"),2.0,0.00001);
+		Assert.assertEquals(json.getDouble("charge"),2.0,0.00001);
 	}
 	
 
