@@ -145,7 +145,25 @@ public class Main201502 {
 		Assert.assertEquals(json.getString("mf"),"Ru20");
 		
 		// System.out.println(json.getString("xy"));
-		Assert.assertEquals(json.getString("xy").indexOf("2022.102, 100"),3755);
+		Assert.assertEquals(json.getString("xy").indexOf("2022.10172, 100"),2133);
+	}
+
+	@Test
+	public void isotopicDistributionC100H100() throws MFException, JSONException {
+		init();
+
+		options.put("mf", "C100H100");
+		options.put("isotopomers", "xy");
+		options.put("fwhm", "0.1");
+		options.put("joiningAlgorithm","center");
+		JSONObject json=JSONForMF.execute(options,groups,elements);
+
+		Assert.assertEquals(json.getDouble("em"),1300.7825032071,0.0001);
+		Assert.assertEquals(json.getDouble("mw"),1301.867665,0.01);
+		Assert.assertEquals(json.getString("mf"),"C100H100");
+
+		// System.out.println(json.getString("xy"));
+		Assert.assertEquals(json.getString("xy").indexOf("1301.78589, 100"),20);
 	}
 
 	
@@ -157,7 +175,7 @@ public class Main201502 {
 		options.put("isotopomers", "xy");
 		options.put("resolution", "0.001");
 		JSONObject json=JSONForMF.execute(options,groups,elements);
-		
+
 		Assert.assertEquals(json.getDouble("em"),130.03355,0.00001);
 		Assert.assertEquals(json.getInt("nominalMass"),130);
 		

@@ -218,7 +218,7 @@ public class Main {
 		Assert.assertEquals(json.getString("mf"),"Ru20");
 		
 		// System.out.println(json.getString("xy"));
-		Assert.assertEquals(json.getString("xy").indexOf("2022.102, 100"),3755);
+		Assert.assertEquals(json.getString("xy").indexOf("2022.10172, 100"),2133);
 	}
 
 	

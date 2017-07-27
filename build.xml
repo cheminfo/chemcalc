@@ -4,7 +4,7 @@
     <!--ANT 1.7 is required                                       -->
     <target name="create_run_jar">
         <jar destfile="chemcalc_lib.jar">
-        	 <fileset dir="bin">
+        	 <fileset dir="out/production/chemcalc">
         	    <exclude name="**/test/**" />
         	 	<exclude name="*/test/*.class" />
         	 	<include name="**/*.class" />

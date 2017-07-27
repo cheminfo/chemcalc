@@ -64,21 +64,18 @@ public class DoubleTreeMap extends TreeMap<Double,Double>  {
 	
 	
 	
-	/** Combines all the X values that are at less than resolution from each other
+	/**
+	 * Combines all the X values that are at less than resolution from each other
 	 */
 	
 	public void combine (double resolution) {
-		// LP : the worse code I wrote ...
-		// but I could not find something better ...
+		// LP : seems really badly written but could not find a better way
 		DoubleTreeMap newTreeMap=new DoubleTreeMap();
 		Iterator<Map.Entry<Double,Double>> iterator=this.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<Double,Double> value=(Map.Entry<Double,Double>)iterator.next();
 			double x=value.getKey();
 			double y=value.getValue();
-
-			iterator.remove();
-			
 			x=Math.rint(x/resolution)*resolution;
 			
 			Double existingY=newTreeMap.get(new Double(x));
@@ -88,6 +85,47 @@ public class DoubleTreeMap extends TreeMap<Double,Double>  {
 			}
 			newTreeMap.put(new Double(x),new Double(y));
 		}
+		this.clear();
+		this.add(newTreeMap);
+	}
+
+	/**
+	 * Combines all the X values that are at less than resolution from each other
+	 */
+
+	public void combineProportional (double resolution) {
+		DoubleTreeMap newTreeMap=new DoubleTreeMap();
+		Iterator<Map.Entry<Double,Double>> iterator=this.entrySet().iterator();
+
+		if (! iterator.hasNext()) {
+			return;
+		}
+
+		double previousX=Double.NEGATIVE_INFINITY;
+		double previousY=0;
+		Map.Entry<Double,Double> value;
+
+		while (iterator.hasNext()) {
+			value=iterator.next();
+			double x=value.getKey();
+			double y=value.getValue();
+			if ( (x-previousX) > resolution) { // need to add the result
+				if (previousX!=Double.NEGATIVE_INFINITY) {
+					newTreeMap.put(new Double(previousX), new Double(previousY));
+				}
+				previousX = x;
+				previousY = y;
+			} else {
+				// need to make the average
+				previousX=(previousX*previousY+x*y)/(previousY+y);
+				previousY+=y;
+			}
+		}
+		if (previousX!=Double.NEGATIVE_INFINITY) {
+			newTreeMap.put(new Double(previousX), new Double(previousY));
+		}
+
+		this.clear();
 		this.add(newTreeMap);
 	}
 
@@ -492,10 +530,6 @@ public class DoubleTreeMap extends TreeMap<Double,Double>  {
 		treeMap.addX(0.1);
 		
 		System.out.println("Map X + 0.1:\r\n"+treeMap.toString());
-
-		treeMap.combine(1);
-
-		System.out.println("Combine to 1:\r\n"+treeMap.toString());
 
 		treeMap.normalize();
 		

@@ -40,10 +40,7 @@ public class CheckApproximation {
 		
 		result1=combine(result1, targetResolution);
 		printDoubleArray(result1);
-		
-		
-		System.out.println("---------------");
-		
+
  		spectrumCalculator=new SpectrumCalculator(elements,formula,resolution2);
      	spectrumCalculator.calculate();
 	   	spectrumCalculator.normalize();

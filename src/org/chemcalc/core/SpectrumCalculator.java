@@ -32,8 +32,8 @@ public class SpectrumCalculator {
     private Formula formula;
     private HashMap<Double,String> labels=new HashMap<Double,String>();
     // maximal size of distribution
-    public static byte JOINING_MAIN_PEAK=0;
-    public static byte JOINING_CENTER_MASS=1;
+    public final static byte JOINING_MAIN_PEAK=0;
+    public final static byte JOINING_CENTER_MASS=1;
     private byte joiningAlgorithm=JOINING_MAIN_PEAK;
     
     public SpectrumCalculator(HashMap<String, Element> elements, Formula formula, double fwhm) throws MFException {
@@ -480,9 +480,14 @@ public class SpectrumCalculator {
 	 	
 		private void normalize(double factor, double fwhm, double intensityCutoff) {
 			result.cutoff(intensityCutoff);
-			result.combine(fwhm);
+			switch (joiningAlgorithm) {
+				case SpectrumCalculator.JOINING_MAIN_PEAK:
+					result.combine(fwhm);
+					break;
+				case SpectrumCalculator.JOINING_CENTER_MASS:
+					result.combineProportional(fwhm);
+			}
 			result.normalize(factor);
 	    }
 	} //end class Distribution
-	
 }
