@@ -234,14 +234,22 @@ public class Formula {
     public String toString() {
         Iterator it=parts.iterator();
         StringBuffer outstr=new StringBuffer("");
-        if (it.hasNext()) outstr=new StringBuffer(it.next().toString());
+        boolean first=true;
         while (it.hasNext()) {
+            if (first) {
+                first=false;
+            } else {
+                outstr.append(".");
+            }
             FormulaPart fp=(FormulaPart)it.next();
-            if (fp.getNumber()==1)
-                outstr.append("."+fp.toString());
-            else if (fp.getNumber()==0)
-                outstr.append(".n"+fp.toString());
-            else outstr.append("."+fp.getNumber()+fp.toString());
+            if (fp.getNumber()==1) {
+                outstr.append(fp.toString());
+            } else if (fp.getNumber()==0) {
+                outstr.append("n"+fp.toString());
+            } else {
+                String number = (fp.getNumber()+"").replaceAll("\\.0+$","");
+                outstr.append(number+fp.toString());
+            }
         }
         return outstr.toString();
     }

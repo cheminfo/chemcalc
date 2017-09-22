@@ -202,7 +202,20 @@ public class Main {
 		//System.out.println(xy.substring(index-20, index+20));
 		Assert.assertEquals(xy.indexOf("2018.102, 100"),7731);
 	}
-	
+
+	@Test
+	public void dimer() throws MFException, JSONException {
+		init();
+
+		options.put("mf", "2H2O");
+		JSONObject json=JSONForMF.execute(options,groups,elements);
+
+		Assert.assertEquals(json.getDouble("em"),36.021,0.001);
+		Assert.assertEquals(json.getDouble("mw"),36,0.1);
+		Assert.assertEquals(json.getString("mf"),"2H2O");
+
+	}
+
 	@Test
 	public void isotopicDistributionRuV2() throws MFException, JSONException {
 		init();

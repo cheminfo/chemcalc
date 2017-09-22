@@ -486,6 +486,7 @@ public class SpectrumCalculator {
 					break;
 				case SpectrumCalculator.JOINING_CENTER_MASS:
 					result.combineProportional(fwhm);
+					break;
 			}
 			result.normalize(factor);
 	    }
